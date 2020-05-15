@@ -1,0 +1,27 @@
+procedure optest {
+  int a, b, c;
+
+  a = 2;
+  b = 1;
+
+  c = a + 1;
+  write c;
+
+  c = 1 + a;
+  write c;
+
+  c = a - 1;
+  write c;
+
+  c = a * 1;
+  write c;
+
+  c = 1 * a;
+  write c;
+
+  c = a / 1;
+  write c;
+
+  c = b / 2;
+  write c;
+}

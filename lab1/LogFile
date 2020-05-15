@@ -1,0 +1,16 @@
+LogFile is unbuffered.
+
+COMP 506 DEMO Compiler
+Run on 'amber.clear.rice.edu' at Mon Jan 21 11:59:20 2019
+Using code base R02.02
+
+File disposition:
+	Reading from stdin.
+	stdout is unbuffered.
+
+Parser, line 1: syntax error, unexpected WRITE, expecting PROCEDURE
+	lexeme is 'write'.
+
+Parser fails with 1 error messages.
+Execution halts.
+Due to errors, deleting files (null) and (null)

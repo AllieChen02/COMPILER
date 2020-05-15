@@ -1,0 +1,1942 @@
+State 28 conflicts: 14 reduce/reduce
+State 30 conflicts: 2 shift/reduce
+State 81 conflicts: 2 shift/reduce
+State 83 conflicts: 2 shift/reduce
+
+
+Grammar
+
+    0 $accept: Procedure $end
+
+    1 Procedure: PROCEDURE NAME '{' Decls Stmts '}'
+    2          | PROCEDURE NAME '{' Decls Stmts
+    3          | PROCEDURE NAME '{' Decls Stmts '}' '}'
+
+    4 Decls: Decls Decl ';'
+    5      | Decl ';'
+
+    6 Decl: Type SpecList
+
+    7 Type: INT
+    8     | CHAR
+
+    9 SpecList: SpecList ',' Spec
+   10         | Spec
+
+   11 Spec: NAME
+   12     | NAME '[' Bounds ']'
+
+   13 Bounds: Bounds ',' Bound
+   14       | Bound
+
+   15 Bound: NUMBER ':' NUMBER
+
+   16 Stmts: Stmts Stmt
+   17      | Stmt
+
+   18 Stmt: Assignment
+   19     | Matched_stmt
+   20     | Open_stmt
+
+   21 Matched_stmt: IF '(' Bool ')' THEN Matched_stmt ELSE Matched_stmt
+   22             | Assignment
+
+   23 Open_stmt: IF '(' Bool ')' THEN Stmt
+   24          | IF '(' Bool ')' THEN Matched_stmt ELSE Open_stmt
+
+   25 Assignment: Reference '=' Expr ';'
+   26           | '{' Stmts '}'
+   27           | '{' '}'
+   28           | ';'
+   29           | WHILE '(' Bool ')' '{' Stmts '}'
+   30           | FOR NAME '=' Expr TO Expr BY Expr '{' Stmts '}'
+   31           | READ Reference ';'
+   32           | WRITE Expr ';'
+   33           | WRITE '=' Expr ';'
+   34           | Expr '+' '=' Term
+   35           | Expr '-' '=' Term
+   36           | Expr '*' '=' Term
+   37           | Expr '/' '=' Term
+   38           | Reference Expr ';'
+   39           | error ';'
+
+   40 Bool: NOT OrTerm
+   41     | OrTerm
+
+   42 OrTerm: OrTerm OR AndTerm
+   43       | AndTerm
+
+   44 AndTerm: AndTerm AND RelExpr
+   45        | RelExpr
+
+   46 RelExpr: RelExpr LT Expr
+   47        | RelExpr LE Expr
+   48        | RelExpr EQ Expr
+   49        | RelExpr NE Expr
+   50        | RelExpr GE Expr
+   51        | RelExpr GT Expr
+   52        | Expr
+
+   53 Expr: Expr '+' Term
+   54     | Expr '-' Term
+   55     | Term
+
+   56 Term: Term '*' Factor
+   57     | Term '/' Factor
+   58     | Factor
+
+   59 Factor: '(' Expr ')'
+   60       | Reference
+   61       | NUMBER
+   62       | CHARCONST
+
+   63 Reference: NAME
+   64          | NAME '[' Exprs ']'
+
+   65 Exprs: Expr ',' Exprs
+   66      | Expr
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 21 23 24 29 59
+')' (41) 21 23 24 29 59
+'*' (42) 36 56
+'+' (43) 34 53
+',' (44) 9 13 65
+'-' (45) 35 54
+'/' (47) 37 57
+':' (58) 15
+';' (59) 4 5 25 28 31 32 33 38 39
+'=' (61) 25 30 33 34 35 36 37
+'[' (91) 12 64
+']' (93) 12 64
+'{' (123) 1 2 3 26 27 29 30
+'}' (125) 1 3 26 27 29 30
+error (256) 39
+AND (258) 44
+BY (259) 30
+CHAR (260) 8
+ELSE (261) 21 24
+FOR (262) 30
+IF (263) 21 23 24
+INT (264) 7
+NOT (265) 40
+OR (266) 42
+PROCEDURE (267) 1 2 3
+READ (268) 31
+THEN (269) 21 23 24
+TO (270) 30
+WHILE (271) 29
+WRITE (272) 32 33
+LT (273) 46
+LE (274) 47
+EQ (275) 48
+NE (276) 49
+GT (277) 51
+GE (278) 50
+NAME (279) 1 2 3 11 12 30 63 64
+NUMBER (280) 15 61
+CHARCONST (281) 62
+
+
+Nonterminals, with rules where they appear
+
+$accept (41)
+    on left: 0
+Procedure (42)
+    on left: 1 2 3, on right: 0
+Decls (43)
+    on left: 4 5, on right: 1 2 3 4
+Decl (44)
+    on left: 6, on right: 4 5
+Type (45)
+    on left: 7 8, on right: 6
+SpecList (46)
+    on left: 9 10, on right: 6 9
+Spec (47)
+    on left: 11 12, on right: 9 10
+Bounds (48)
+    on left: 13 14, on right: 12 13
+Bound (49)
+    on left: 15, on right: 13 14
+Stmts (50)
+    on left: 16 17, on right: 1 2 3 16 26 29 30
+Stmt (51)
+    on left: 18 19 20, on right: 16 17 23
+Matched_stmt (52)
+    on left: 21 22, on right: 19 21 24
+Open_stmt (53)
+    on left: 23 24, on right: 20 24
+Assignment (54)
+    on left: 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39,
+    on right: 18 22
+Bool (55)
+    on left: 40 41, on right: 21 23 24 29
+OrTerm (56)
+    on left: 42 43, on right: 40 41 42
+AndTerm (57)
+    on left: 44 45, on right: 42 43 44
+RelExpr (58)
+    on left: 46 47 48 49 50 51 52, on right: 44 45 46 47 48 49 50 51
+Expr (59)
+    on left: 53 54 55, on right: 25 30 32 33 34 35 36 37 38 46 47 48
+    49 50 51 52 53 54 59 65 66
+Term (60)
+    on left: 56 57 58, on right: 34 35 36 37 53 54 55 56 57
+Factor (61)
+    on left: 59 60 61 62, on right: 56 57 58
+Reference (62)
+    on left: 63 64, on right: 25 31 38 60
+Exprs (63)
+    on left: 65 66, on right: 64 65
+
+
+state 0
+
+    0 $accept: . Procedure $end
+
+    PROCEDURE  shift, and go to state 1
+
+    Procedure  go to state 2
+
+
+state 1
+
+    1 Procedure: PROCEDURE . NAME '{' Decls Stmts '}'
+    2          | PROCEDURE . NAME '{' Decls Stmts
+    3          | PROCEDURE . NAME '{' Decls Stmts '}' '}'
+
+    NAME  shift, and go to state 3
+
+
+state 2
+
+    0 $accept: Procedure . $end
+
+    $end  shift, and go to state 4
+
+
+state 3
+
+    1 Procedure: PROCEDURE NAME . '{' Decls Stmts '}'
+    2          | PROCEDURE NAME . '{' Decls Stmts
+    3          | PROCEDURE NAME . '{' Decls Stmts '}' '}'
+
+    '{'  shift, and go to state 5
+
+
+state 4
+
+    0 $accept: Procedure $end .
+
+    $default  accept
+
+
+state 5
+
+    1 Procedure: PROCEDURE NAME '{' . Decls Stmts '}'
+    2          | PROCEDURE NAME '{' . Decls Stmts
+    3          | PROCEDURE NAME '{' . Decls Stmts '}' '}'
+
+    CHAR  shift, and go to state 6
+    INT   shift, and go to state 7
+
+    Decls  go to state 8
+    Decl   go to state 9
+    Type   go to state 10
+
+
+state 6
+
+    8 Type: CHAR .
+
+    $default  reduce using rule 8 (Type)
+
+
+state 7
+
+    7 Type: INT .
+
+    $default  reduce using rule 7 (Type)
+
+
+state 8
+
+    1 Procedure: PROCEDURE NAME '{' Decls . Stmts '}'
+    2          | PROCEDURE NAME '{' Decls . Stmts
+    3          | PROCEDURE NAME '{' Decls . Stmts '}' '}'
+    4 Decls: Decls . Decl ';'
+
+    error      shift, and go to state 11
+    CHAR       shift, and go to state 6
+    FOR        shift, and go to state 12
+    IF         shift, and go to state 13
+    INT        shift, and go to state 7
+    READ       shift, and go to state 14
+    WHILE      shift, and go to state 15
+    WRITE      shift, and go to state 16
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '{'        shift, and go to state 20
+    ';'        shift, and go to state 21
+    '('        shift, and go to state 22
+
+    Decl          go to state 23
+    Type          go to state 10
+    Stmts         go to state 24
+    Stmt          go to state 25
+    Matched_stmt  go to state 26
+    Open_stmt     go to state 27
+    Assignment    go to state 28
+    Expr          go to state 29
+    Term          go to state 30
+    Factor        go to state 31
+    Reference     go to state 32
+
+
+state 9
+
+    5 Decls: Decl . ';'
+
+    ';'  shift, and go to state 33
+
+
+state 10
+
+    6 Decl: Type . SpecList
+
+    NAME  shift, and go to state 34
+
+    SpecList  go to state 35
+    Spec      go to state 36
+
+
+state 11
+
+   39 Assignment: error . ';'
+
+    ';'  shift, and go to state 37
+
+
+state 12
+
+   30 Assignment: FOR . NAME '=' Expr TO Expr BY Expr '{' Stmts '}'
+
+    NAME  shift, and go to state 38
+
+
+state 13
+
+   21 Matched_stmt: IF . '(' Bool ')' THEN Matched_stmt ELSE Matched_stmt
+   23 Open_stmt: IF . '(' Bool ')' THEN Stmt
+   24          | IF . '(' Bool ')' THEN Matched_stmt ELSE Open_stmt
+
+    '('  shift, and go to state 39
+
+
+state 14
+
+   31 Assignment: READ . Reference ';'
+
+    NAME  shift, and go to state 17
+
+    Reference  go to state 40
+
+
+state 15
+
+   29 Assignment: WHILE . '(' Bool ')' '{' Stmts '}'
+
+    '('  shift, and go to state 41
+
+
+state 16
+
+   32 Assignment: WRITE . Expr ';'
+   33           | WRITE . '=' Expr ';'
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+    '='        shift, and go to state 42
+
+    Expr       go to state 43
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 17
+
+   63 Reference: NAME .
+   64          | NAME . '[' Exprs ']'
+
+    '['  shift, and go to state 45
+
+    $default  reduce using rule 63 (Reference)
+
+
+state 18
+
+   61 Factor: NUMBER .
+
+    $default  reduce using rule 61 (Factor)
+
+
+state 19
+
+   62 Factor: CHARCONST .
+
+    $default  reduce using rule 62 (Factor)
+
+
+state 20
+
+   26 Assignment: '{' . Stmts '}'
+   27           | '{' . '}'
+
+    error      shift, and go to state 11
+    FOR        shift, and go to state 12
+    IF         shift, and go to state 13
+    READ       shift, and go to state 14
+    WHILE      shift, and go to state 15
+    WRITE      shift, and go to state 16
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '{'        shift, and go to state 20
+    '}'        shift, and go to state 46
+    ';'        shift, and go to state 21
+    '('        shift, and go to state 22
+
+    Stmts         go to state 47
+    Stmt          go to state 25
+    Matched_stmt  go to state 26
+    Open_stmt     go to state 27
+    Assignment    go to state 28
+    Expr          go to state 29
+    Term          go to state 30
+    Factor        go to state 31
+    Reference     go to state 32
+
+
+state 21
+
+   28 Assignment: ';' .
+
+    $default  reduce using rule 28 (Assignment)
+
+
+state 22
+
+   59 Factor: '(' . Expr ')'
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 48
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 23
+
+    4 Decls: Decls Decl . ';'
+
+    ';'  shift, and go to state 49
+
+
+state 24
+
+    1 Procedure: PROCEDURE NAME '{' Decls Stmts . '}'
+    2          | PROCEDURE NAME '{' Decls Stmts .
+    3          | PROCEDURE NAME '{' Decls Stmts . '}' '}'
+   16 Stmts: Stmts . Stmt
+
+    error      shift, and go to state 11
+    FOR        shift, and go to state 12
+    IF         shift, and go to state 13
+    READ       shift, and go to state 14
+    WHILE      shift, and go to state 15
+    WRITE      shift, and go to state 16
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '{'        shift, and go to state 20
+    '}'        shift, and go to state 50
+    ';'        shift, and go to state 21
+    '('        shift, and go to state 22
+
+    $end  reduce using rule 2 (Procedure)
+
+    Stmt          go to state 51
+    Matched_stmt  go to state 26
+    Open_stmt     go to state 27
+    Assignment    go to state 28
+    Expr          go to state 29
+    Term          go to state 30
+    Factor        go to state 31
+    Reference     go to state 32
+
+
+state 25
+
+   17 Stmts: Stmt .
+
+    $default  reduce using rule 17 (Stmts)
+
+
+state 26
+
+   19 Stmt: Matched_stmt .
+
+    $default  reduce using rule 19 (Stmt)
+
+
+state 27
+
+   20 Stmt: Open_stmt .
+
+    $default  reduce using rule 20 (Stmt)
+
+
+state 28
+
+   18 Stmt: Assignment .
+   22 Matched_stmt: Assignment .
+
+    $end       reduce using rule 18 (Stmt)
+    $end       [reduce using rule 22 (Matched_stmt)]
+    error      reduce using rule 18 (Stmt)
+    error      [reduce using rule 22 (Matched_stmt)]
+    ELSE       reduce using rule 22 (Matched_stmt)
+    FOR        reduce using rule 18 (Stmt)
+    FOR        [reduce using rule 22 (Matched_stmt)]
+    IF         reduce using rule 18 (Stmt)
+    IF         [reduce using rule 22 (Matched_stmt)]
+    READ       reduce using rule 18 (Stmt)
+    READ       [reduce using rule 22 (Matched_stmt)]
+    WHILE      reduce using rule 18 (Stmt)
+    WHILE      [reduce using rule 22 (Matched_stmt)]
+    WRITE      reduce using rule 18 (Stmt)
+    WRITE      [reduce using rule 22 (Matched_stmt)]
+    NAME       reduce using rule 18 (Stmt)
+    NAME       [reduce using rule 22 (Matched_stmt)]
+    NUMBER     reduce using rule 18 (Stmt)
+    NUMBER     [reduce using rule 22 (Matched_stmt)]
+    CHARCONST  reduce using rule 18 (Stmt)
+    CHARCONST  [reduce using rule 22 (Matched_stmt)]
+    '{'        reduce using rule 18 (Stmt)
+    '{'        [reduce using rule 22 (Matched_stmt)]
+    '}'        reduce using rule 18 (Stmt)
+    '}'        [reduce using rule 22 (Matched_stmt)]
+    ';'        reduce using rule 18 (Stmt)
+    ';'        [reduce using rule 22 (Matched_stmt)]
+    '('        reduce using rule 18 (Stmt)
+    '('        [reduce using rule 22 (Matched_stmt)]
+    $default   reduce using rule 18 (Stmt)
+
+
+state 29
+
+   34 Assignment: Expr . '+' '=' Term
+   35           | Expr . '-' '=' Term
+   36           | Expr . '*' '=' Term
+   37           | Expr . '/' '=' Term
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+
+
+state 30
+
+   55 Expr: Term .
+   56 Term: Term . '*' Factor
+   57     | Term . '/' Factor
+
+    '*'  shift, and go to state 56
+    '/'  shift, and go to state 57
+
+    '*'       [reduce using rule 55 (Expr)]
+    '/'       [reduce using rule 55 (Expr)]
+    $default  reduce using rule 55 (Expr)
+
+
+state 31
+
+   58 Term: Factor .
+
+    $default  reduce using rule 58 (Term)
+
+
+state 32
+
+   25 Assignment: Reference . '=' Expr ';'
+   38           | Reference . Expr ';'
+   60 Factor: Reference .
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+    '='        shift, and go to state 58
+
+    $default  reduce using rule 60 (Factor)
+
+    Expr       go to state 59
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 33
+
+    5 Decls: Decl ';' .
+
+    $default  reduce using rule 5 (Decls)
+
+
+state 34
+
+   11 Spec: NAME .
+   12     | NAME . '[' Bounds ']'
+
+    '['  shift, and go to state 60
+
+    $default  reduce using rule 11 (Spec)
+
+
+state 35
+
+    6 Decl: Type SpecList .
+    9 SpecList: SpecList . ',' Spec
+
+    ','  shift, and go to state 61
+
+    $default  reduce using rule 6 (Decl)
+
+
+state 36
+
+   10 SpecList: Spec .
+
+    $default  reduce using rule 10 (SpecList)
+
+
+state 37
+
+   39 Assignment: error ';' .
+
+    $default  reduce using rule 39 (Assignment)
+
+
+state 38
+
+   30 Assignment: FOR NAME . '=' Expr TO Expr BY Expr '{' Stmts '}'
+
+    '='  shift, and go to state 62
+
+
+state 39
+
+   21 Matched_stmt: IF '(' . Bool ')' THEN Matched_stmt ELSE Matched_stmt
+   23 Open_stmt: IF '(' . Bool ')' THEN Stmt
+   24          | IF '(' . Bool ')' THEN Matched_stmt ELSE Open_stmt
+
+    NOT        shift, and go to state 63
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Bool       go to state 64
+    OrTerm     go to state 65
+    AndTerm    go to state 66
+    RelExpr    go to state 67
+    Expr       go to state 68
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 40
+
+   31 Assignment: READ Reference . ';'
+
+    ';'  shift, and go to state 69
+
+
+state 41
+
+   29 Assignment: WHILE '(' . Bool ')' '{' Stmts '}'
+
+    NOT        shift, and go to state 63
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Bool       go to state 70
+    OrTerm     go to state 65
+    AndTerm    go to state 66
+    RelExpr    go to state 67
+    Expr       go to state 68
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 42
+
+   33 Assignment: WRITE '=' . Expr ';'
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 71
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 43
+
+   32 Assignment: WRITE Expr . ';'
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    ';'  shift, and go to state 72
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+
+state 44
+
+   60 Factor: Reference .
+
+    $default  reduce using rule 60 (Factor)
+
+
+state 45
+
+   64 Reference: NAME '[' . Exprs ']'
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 75
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+    Exprs      go to state 76
+
+
+state 46
+
+   27 Assignment: '{' '}' .
+
+    $default  reduce using rule 27 (Assignment)
+
+
+state 47
+
+   16 Stmts: Stmts . Stmt
+   26 Assignment: '{' Stmts . '}'
+
+    error      shift, and go to state 11
+    FOR        shift, and go to state 12
+    IF         shift, and go to state 13
+    READ       shift, and go to state 14
+    WHILE      shift, and go to state 15
+    WRITE      shift, and go to state 16
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '{'        shift, and go to state 20
+    '}'        shift, and go to state 77
+    ';'        shift, and go to state 21
+    '('        shift, and go to state 22
+
+    Stmt          go to state 51
+    Matched_stmt  go to state 26
+    Open_stmt     go to state 27
+    Assignment    go to state 28
+    Expr          go to state 29
+    Term          go to state 30
+    Factor        go to state 31
+    Reference     go to state 32
+
+
+state 48
+
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+   59 Factor: '(' Expr . ')'
+
+    ')'  shift, and go to state 78
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+
+state 49
+
+    4 Decls: Decls Decl ';' .
+
+    $default  reduce using rule 4 (Decls)
+
+
+state 50
+
+    1 Procedure: PROCEDURE NAME '{' Decls Stmts '}' .
+    3          | PROCEDURE NAME '{' Decls Stmts '}' . '}'
+
+    '}'  shift, and go to state 79
+
+    $default  reduce using rule 1 (Procedure)
+
+
+state 51
+
+   16 Stmts: Stmts Stmt .
+
+    $default  reduce using rule 16 (Stmts)
+
+
+state 52
+
+   34 Assignment: Expr '+' . '=' Term
+   53 Expr: Expr '+' . Term
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+    '='        shift, and go to state 80
+
+    Term       go to state 81
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 53
+
+   35 Assignment: Expr '-' . '=' Term
+   54 Expr: Expr '-' . Term
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+    '='        shift, and go to state 82
+
+    Term       go to state 83
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 54
+
+   36 Assignment: Expr '*' . '=' Term
+
+    '='  shift, and go to state 84
+
+
+state 55
+
+   37 Assignment: Expr '/' . '=' Term
+
+    '='  shift, and go to state 85
+
+
+state 56
+
+   56 Term: Term '*' . Factor
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Factor     go to state 86
+    Reference  go to state 44
+
+
+state 57
+
+   57 Term: Term '/' . Factor
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Factor     go to state 87
+    Reference  go to state 44
+
+
+state 58
+
+   25 Assignment: Reference '=' . Expr ';'
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 88
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 59
+
+   38 Assignment: Reference Expr . ';'
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    ';'  shift, and go to state 89
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+
+state 60
+
+   12 Spec: NAME '[' . Bounds ']'
+
+    NUMBER  shift, and go to state 90
+
+    Bounds  go to state 91
+    Bound   go to state 92
+
+
+state 61
+
+    9 SpecList: SpecList ',' . Spec
+
+    NAME  shift, and go to state 34
+
+    Spec  go to state 93
+
+
+state 62
+
+   30 Assignment: FOR NAME '=' . Expr TO Expr BY Expr '{' Stmts '}'
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 94
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 63
+
+   40 Bool: NOT . OrTerm
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    OrTerm     go to state 95
+    AndTerm    go to state 66
+    RelExpr    go to state 67
+    Expr       go to state 68
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 64
+
+   21 Matched_stmt: IF '(' Bool . ')' THEN Matched_stmt ELSE Matched_stmt
+   23 Open_stmt: IF '(' Bool . ')' THEN Stmt
+   24          | IF '(' Bool . ')' THEN Matched_stmt ELSE Open_stmt
+
+    ')'  shift, and go to state 96
+
+
+state 65
+
+   41 Bool: OrTerm .
+   42 OrTerm: OrTerm . OR AndTerm
+
+    OR  shift, and go to state 97
+
+    $default  reduce using rule 41 (Bool)
+
+
+state 66
+
+   43 OrTerm: AndTerm .
+   44 AndTerm: AndTerm . AND RelExpr
+
+    AND  shift, and go to state 98
+
+    $default  reduce using rule 43 (OrTerm)
+
+
+state 67
+
+   45 AndTerm: RelExpr .
+   46 RelExpr: RelExpr . LT Expr
+   47        | RelExpr . LE Expr
+   48        | RelExpr . EQ Expr
+   49        | RelExpr . NE Expr
+   50        | RelExpr . GE Expr
+   51        | RelExpr . GT Expr
+
+    LT  shift, and go to state 99
+    LE  shift, and go to state 100
+    EQ  shift, and go to state 101
+    NE  shift, and go to state 102
+    GT  shift, and go to state 103
+    GE  shift, and go to state 104
+
+    $default  reduce using rule 45 (AndTerm)
+
+
+state 68
+
+   52 RelExpr: Expr .
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+    $default  reduce using rule 52 (RelExpr)
+
+
+state 69
+
+   31 Assignment: READ Reference ';' .
+
+    $default  reduce using rule 31 (Assignment)
+
+
+state 70
+
+   29 Assignment: WHILE '(' Bool . ')' '{' Stmts '}'
+
+    ')'  shift, and go to state 105
+
+
+state 71
+
+   33 Assignment: WRITE '=' Expr . ';'
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    ';'  shift, and go to state 106
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+
+state 72
+
+   32 Assignment: WRITE Expr ';' .
+
+    $default  reduce using rule 32 (Assignment)
+
+
+state 73
+
+   53 Expr: Expr '+' . Term
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Term       go to state 81
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 74
+
+   54 Expr: Expr '-' . Term
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Term       go to state 83
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 75
+
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+   65 Exprs: Expr . ',' Exprs
+   66      | Expr .
+
+    ','  shift, and go to state 107
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+    $default  reduce using rule 66 (Exprs)
+
+
+state 76
+
+   64 Reference: NAME '[' Exprs . ']'
+
+    ']'  shift, and go to state 108
+
+
+state 77
+
+   26 Assignment: '{' Stmts '}' .
+
+    $default  reduce using rule 26 (Assignment)
+
+
+state 78
+
+   59 Factor: '(' Expr ')' .
+
+    $default  reduce using rule 59 (Factor)
+
+
+state 79
+
+    3 Procedure: PROCEDURE NAME '{' Decls Stmts '}' '}' .
+
+    $default  reduce using rule 3 (Procedure)
+
+
+state 80
+
+   34 Assignment: Expr '+' '=' . Term
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Term       go to state 109
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 81
+
+   53 Expr: Expr '+' Term .
+   56 Term: Term . '*' Factor
+   57     | Term . '/' Factor
+
+    '*'  shift, and go to state 56
+    '/'  shift, and go to state 57
+
+    '*'       [reduce using rule 53 (Expr)]
+    '/'       [reduce using rule 53 (Expr)]
+    $default  reduce using rule 53 (Expr)
+
+
+state 82
+
+   35 Assignment: Expr '-' '=' . Term
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Term       go to state 110
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 83
+
+   54 Expr: Expr '-' Term .
+   56 Term: Term . '*' Factor
+   57     | Term . '/' Factor
+
+    '*'  shift, and go to state 56
+    '/'  shift, and go to state 57
+
+    '*'       [reduce using rule 54 (Expr)]
+    '/'       [reduce using rule 54 (Expr)]
+    $default  reduce using rule 54 (Expr)
+
+
+state 84
+
+   36 Assignment: Expr '*' '=' . Term
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Term       go to state 111
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 85
+
+   37 Assignment: Expr '/' '=' . Term
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Term       go to state 112
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 86
+
+   56 Term: Term '*' Factor .
+
+    $default  reduce using rule 56 (Term)
+
+
+state 87
+
+   57 Term: Term '/' Factor .
+
+    $default  reduce using rule 57 (Term)
+
+
+state 88
+
+   25 Assignment: Reference '=' Expr . ';'
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    ';'  shift, and go to state 113
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+
+state 89
+
+   38 Assignment: Reference Expr ';' .
+
+    $default  reduce using rule 38 (Assignment)
+
+
+state 90
+
+   15 Bound: NUMBER . ':' NUMBER
+
+    ':'  shift, and go to state 114
+
+
+state 91
+
+   12 Spec: NAME '[' Bounds . ']'
+   13 Bounds: Bounds . ',' Bound
+
+    ','  shift, and go to state 115
+    ']'  shift, and go to state 116
+
+
+state 92
+
+   14 Bounds: Bound .
+
+    $default  reduce using rule 14 (Bounds)
+
+
+state 93
+
+    9 SpecList: SpecList ',' Spec .
+
+    $default  reduce using rule 9 (SpecList)
+
+
+state 94
+
+   30 Assignment: FOR NAME '=' Expr . TO Expr BY Expr '{' Stmts '}'
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    TO   shift, and go to state 117
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+
+state 95
+
+   40 Bool: NOT OrTerm .
+   42 OrTerm: OrTerm . OR AndTerm
+
+    OR  shift, and go to state 97
+
+    $default  reduce using rule 40 (Bool)
+
+
+state 96
+
+   21 Matched_stmt: IF '(' Bool ')' . THEN Matched_stmt ELSE Matched_stmt
+   23 Open_stmt: IF '(' Bool ')' . THEN Stmt
+   24          | IF '(' Bool ')' . THEN Matched_stmt ELSE Open_stmt
+
+    THEN  shift, and go to state 118
+
+
+state 97
+
+   42 OrTerm: OrTerm OR . AndTerm
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    AndTerm    go to state 119
+    RelExpr    go to state 67
+    Expr       go to state 68
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 98
+
+   44 AndTerm: AndTerm AND . RelExpr
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    RelExpr    go to state 120
+    Expr       go to state 68
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 99
+
+   46 RelExpr: RelExpr LT . Expr
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 121
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 100
+
+   47 RelExpr: RelExpr LE . Expr
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 122
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 101
+
+   48 RelExpr: RelExpr EQ . Expr
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 123
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 102
+
+   49 RelExpr: RelExpr NE . Expr
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 124
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 103
+
+   51 RelExpr: RelExpr GT . Expr
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 125
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 104
+
+   50 RelExpr: RelExpr GE . Expr
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 126
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 105
+
+   29 Assignment: WHILE '(' Bool ')' . '{' Stmts '}'
+
+    '{'  shift, and go to state 127
+
+
+state 106
+
+   33 Assignment: WRITE '=' Expr ';' .
+
+    $default  reduce using rule 33 (Assignment)
+
+
+state 107
+
+   65 Exprs: Expr ',' . Exprs
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 75
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+    Exprs      go to state 128
+
+
+state 108
+
+   64 Reference: NAME '[' Exprs ']' .
+
+    $default  reduce using rule 64 (Reference)
+
+
+state 109
+
+   34 Assignment: Expr '+' '=' Term .
+   56 Term: Term . '*' Factor
+   57     | Term . '/' Factor
+
+    '*'  shift, and go to state 56
+    '/'  shift, and go to state 57
+
+    $default  reduce using rule 34 (Assignment)
+
+
+state 110
+
+   35 Assignment: Expr '-' '=' Term .
+   56 Term: Term . '*' Factor
+   57     | Term . '/' Factor
+
+    '*'  shift, and go to state 56
+    '/'  shift, and go to state 57
+
+    $default  reduce using rule 35 (Assignment)
+
+
+state 111
+
+   36 Assignment: Expr '*' '=' Term .
+   56 Term: Term . '*' Factor
+   57     | Term . '/' Factor
+
+    '*'  shift, and go to state 56
+    '/'  shift, and go to state 57
+
+    $default  reduce using rule 36 (Assignment)
+
+
+state 112
+
+   37 Assignment: Expr '/' '=' Term .
+   56 Term: Term . '*' Factor
+   57     | Term . '/' Factor
+
+    '*'  shift, and go to state 56
+    '/'  shift, and go to state 57
+
+    $default  reduce using rule 37 (Assignment)
+
+
+state 113
+
+   25 Assignment: Reference '=' Expr ';' .
+
+    $default  reduce using rule 25 (Assignment)
+
+
+state 114
+
+   15 Bound: NUMBER ':' . NUMBER
+
+    NUMBER  shift, and go to state 129
+
+
+state 115
+
+   13 Bounds: Bounds ',' . Bound
+
+    NUMBER  shift, and go to state 90
+
+    Bound  go to state 130
+
+
+state 116
+
+   12 Spec: NAME '[' Bounds ']' .
+
+    $default  reduce using rule 12 (Spec)
+
+
+state 117
+
+   30 Assignment: FOR NAME '=' Expr TO . Expr BY Expr '{' Stmts '}'
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 131
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 118
+
+   21 Matched_stmt: IF '(' Bool ')' THEN . Matched_stmt ELSE Matched_stmt
+   23 Open_stmt: IF '(' Bool ')' THEN . Stmt
+   24          | IF '(' Bool ')' THEN . Matched_stmt ELSE Open_stmt
+
+    error      shift, and go to state 11
+    FOR        shift, and go to state 12
+    IF         shift, and go to state 13
+    READ       shift, and go to state 14
+    WHILE      shift, and go to state 15
+    WRITE      shift, and go to state 16
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '{'        shift, and go to state 20
+    ';'        shift, and go to state 21
+    '('        shift, and go to state 22
+
+    Stmt          go to state 132
+    Matched_stmt  go to state 133
+    Open_stmt     go to state 27
+    Assignment    go to state 28
+    Expr          go to state 29
+    Term          go to state 30
+    Factor        go to state 31
+    Reference     go to state 32
+
+
+state 119
+
+   42 OrTerm: OrTerm OR AndTerm .
+   44 AndTerm: AndTerm . AND RelExpr
+
+    AND  shift, and go to state 98
+
+    $default  reduce using rule 42 (OrTerm)
+
+
+state 120
+
+   44 AndTerm: AndTerm AND RelExpr .
+   46 RelExpr: RelExpr . LT Expr
+   47        | RelExpr . LE Expr
+   48        | RelExpr . EQ Expr
+   49        | RelExpr . NE Expr
+   50        | RelExpr . GE Expr
+   51        | RelExpr . GT Expr
+
+    LT  shift, and go to state 99
+    LE  shift, and go to state 100
+    EQ  shift, and go to state 101
+    NE  shift, and go to state 102
+    GT  shift, and go to state 103
+    GE  shift, and go to state 104
+
+    $default  reduce using rule 44 (AndTerm)
+
+
+state 121
+
+   46 RelExpr: RelExpr LT Expr .
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+    $default  reduce using rule 46 (RelExpr)
+
+
+state 122
+
+   47 RelExpr: RelExpr LE Expr .
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+    $default  reduce using rule 47 (RelExpr)
+
+
+state 123
+
+   48 RelExpr: RelExpr EQ Expr .
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+    $default  reduce using rule 48 (RelExpr)
+
+
+state 124
+
+   49 RelExpr: RelExpr NE Expr .
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+    $default  reduce using rule 49 (RelExpr)
+
+
+state 125
+
+   51 RelExpr: RelExpr GT Expr .
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+    $default  reduce using rule 51 (RelExpr)
+
+
+state 126
+
+   50 RelExpr: RelExpr GE Expr .
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+    $default  reduce using rule 50 (RelExpr)
+
+
+state 127
+
+   29 Assignment: WHILE '(' Bool ')' '{' . Stmts '}'
+
+    error      shift, and go to state 11
+    FOR        shift, and go to state 12
+    IF         shift, and go to state 13
+    READ       shift, and go to state 14
+    WHILE      shift, and go to state 15
+    WRITE      shift, and go to state 16
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '{'        shift, and go to state 20
+    ';'        shift, and go to state 21
+    '('        shift, and go to state 22
+
+    Stmts         go to state 134
+    Stmt          go to state 25
+    Matched_stmt  go to state 26
+    Open_stmt     go to state 27
+    Assignment    go to state 28
+    Expr          go to state 29
+    Term          go to state 30
+    Factor        go to state 31
+    Reference     go to state 32
+
+
+state 128
+
+   65 Exprs: Expr ',' Exprs .
+
+    $default  reduce using rule 65 (Exprs)
+
+
+state 129
+
+   15 Bound: NUMBER ':' NUMBER .
+
+    $default  reduce using rule 15 (Bound)
+
+
+state 130
+
+   13 Bounds: Bounds ',' Bound .
+
+    $default  reduce using rule 13 (Bounds)
+
+
+state 131
+
+   30 Assignment: FOR NAME '=' Expr TO Expr . BY Expr '{' Stmts '}'
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    BY   shift, and go to state 135
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+
+state 132
+
+   23 Open_stmt: IF '(' Bool ')' THEN Stmt .
+
+    $default  reduce using rule 23 (Open_stmt)
+
+
+state 133
+
+   19 Stmt: Matched_stmt .
+   21 Matched_stmt: IF '(' Bool ')' THEN Matched_stmt . ELSE Matched_stmt
+   24 Open_stmt: IF '(' Bool ')' THEN Matched_stmt . ELSE Open_stmt
+
+    ELSE  shift, and go to state 136
+
+    $default  reduce using rule 19 (Stmt)
+
+
+state 134
+
+   16 Stmts: Stmts . Stmt
+   29 Assignment: WHILE '(' Bool ')' '{' Stmts . '}'
+
+    error      shift, and go to state 11
+    FOR        shift, and go to state 12
+    IF         shift, and go to state 13
+    READ       shift, and go to state 14
+    WHILE      shift, and go to state 15
+    WRITE      shift, and go to state 16
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '{'        shift, and go to state 20
+    '}'        shift, and go to state 137
+    ';'        shift, and go to state 21
+    '('        shift, and go to state 22
+
+    Stmt          go to state 51
+    Matched_stmt  go to state 26
+    Open_stmt     go to state 27
+    Assignment    go to state 28
+    Expr          go to state 29
+    Term          go to state 30
+    Factor        go to state 31
+    Reference     go to state 32
+
+
+state 135
+
+   30 Assignment: FOR NAME '=' Expr TO Expr BY . Expr '{' Stmts '}'
+
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '('        shift, and go to state 22
+
+    Expr       go to state 138
+    Term       go to state 30
+    Factor     go to state 31
+    Reference  go to state 44
+
+
+state 136
+
+   21 Matched_stmt: IF '(' Bool ')' THEN Matched_stmt ELSE . Matched_stmt
+   24 Open_stmt: IF '(' Bool ')' THEN Matched_stmt ELSE . Open_stmt
+
+    error      shift, and go to state 11
+    FOR        shift, and go to state 12
+    IF         shift, and go to state 13
+    READ       shift, and go to state 14
+    WHILE      shift, and go to state 15
+    WRITE      shift, and go to state 16
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '{'        shift, and go to state 20
+    ';'        shift, and go to state 21
+    '('        shift, and go to state 22
+
+    Matched_stmt  go to state 139
+    Open_stmt     go to state 140
+    Assignment    go to state 141
+    Expr          go to state 29
+    Term          go to state 30
+    Factor        go to state 31
+    Reference     go to state 32
+
+
+state 137
+
+   29 Assignment: WHILE '(' Bool ')' '{' Stmts '}' .
+
+    $default  reduce using rule 29 (Assignment)
+
+
+state 138
+
+   30 Assignment: FOR NAME '=' Expr TO Expr BY Expr . '{' Stmts '}'
+   53 Expr: Expr . '+' Term
+   54     | Expr . '-' Term
+
+    '{'  shift, and go to state 142
+    '+'  shift, and go to state 73
+    '-'  shift, and go to state 74
+
+
+state 139
+
+   21 Matched_stmt: IF '(' Bool ')' THEN Matched_stmt ELSE Matched_stmt .
+
+    $default  reduce using rule 21 (Matched_stmt)
+
+
+state 140
+
+   24 Open_stmt: IF '(' Bool ')' THEN Matched_stmt ELSE Open_stmt .
+
+    $default  reduce using rule 24 (Open_stmt)
+
+
+state 141
+
+   22 Matched_stmt: Assignment .
+
+    $default  reduce using rule 22 (Matched_stmt)
+
+
+state 142
+
+   30 Assignment: FOR NAME '=' Expr TO Expr BY Expr '{' . Stmts '}'
+
+    error      shift, and go to state 11
+    FOR        shift, and go to state 12
+    IF         shift, and go to state 13
+    READ       shift, and go to state 14
+    WHILE      shift, and go to state 15
+    WRITE      shift, and go to state 16
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '{'        shift, and go to state 20
+    ';'        shift, and go to state 21
+    '('        shift, and go to state 22
+
+    Stmts         go to state 143
+    Stmt          go to state 25
+    Matched_stmt  go to state 26
+    Open_stmt     go to state 27
+    Assignment    go to state 28
+    Expr          go to state 29
+    Term          go to state 30
+    Factor        go to state 31
+    Reference     go to state 32
+
+
+state 143
+
+   16 Stmts: Stmts . Stmt
+   30 Assignment: FOR NAME '=' Expr TO Expr BY Expr '{' Stmts . '}'
+
+    error      shift, and go to state 11
+    FOR        shift, and go to state 12
+    IF         shift, and go to state 13
+    READ       shift, and go to state 14
+    WHILE      shift, and go to state 15
+    WRITE      shift, and go to state 16
+    NAME       shift, and go to state 17
+    NUMBER     shift, and go to state 18
+    CHARCONST  shift, and go to state 19
+    '{'        shift, and go to state 20
+    '}'        shift, and go to state 144
+    ';'        shift, and go to state 21
+    '('        shift, and go to state 22
+
+    Stmt          go to state 51
+    Matched_stmt  go to state 26
+    Open_stmt     go to state 27
+    Assignment    go to state 28
+    Expr          go to state 29
+    Term          go to state 30
+    Factor        go to state 31
+    Reference     go to state 32
+
+
+state 144
+
+   30 Assignment: FOR NAME '=' Expr TO Expr BY Expr '{' Stmts '}' .
+
+    $default  reduce using rule 30 (Assignment)

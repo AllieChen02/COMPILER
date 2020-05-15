@@ -1,0 +1,11 @@
+// test character assignment 
+procedure assign {
+  char a, b, c;
+
+  a = 'a';
+  b = 'b';
+  c = 'c';
+  write a;
+  write b;
+  write c;
+}

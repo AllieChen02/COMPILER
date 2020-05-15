@@ -1,0 +1,10 @@
+procedure main {
+  int a;
+  int b;
+ 
+ a = 1;
+ 
+ while ( a == a ) {
+      b = 1 ;
+ }
+}

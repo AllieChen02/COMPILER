@@ -1,0 +1,7 @@
+procedure add {
+  int x;
+  char y;
+  x = 10;
+  y = x;
+  write y; // should print 22 to stdout
+}

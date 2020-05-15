@@ -1,0 +1,13 @@
+LogFile is unbuffered.
+
+COMP 506 DEMO Compiler
+Run on 'chensitingdembp.dyndns.rice.edu' at Fri Apr 24 16:14:05 2020
+Using code base R02.02
+
+File disposition:
+	opening file 'lab2_testcase/basic3.demo'
+	stdout is unbuffered.
+
+Parser, line 6: Error: Unassigned variable 
+	lexeme is ''.
+Due to errors, deleting files (null) and (null)

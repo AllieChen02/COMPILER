@@ -1,0 +1,1492 @@
+Terminals which are not used
+
+   BY
+   COLON
+   FOR
+   LSQUARE
+   ELE
+   RSQUARE
+   TO
+   UNKNOWN
+
+
+Grammar
+
+    0 $accept: Grammar $end
+
+    1 Grammar: ProcList ENDOFFILE
+
+    2 ProcList: ProcList Proc
+    3         | Proc
+
+    4 Proc: PROCEDURE Name LBRACKET Decls Stmts RBRACKET
+    5     | PROCEDURE Name LBRACKET Decls Stmts ENDOFFILE
+
+    6 Decls: Decls Decl SEMICOLON
+    7      | Decl SEMICOLON
+
+    8 Decl: Type SpecList
+
+    9 Type: INT
+   10     | CHAR
+
+   11 SpecList: SpecList COMMA Spec
+   12         | Spec
+
+   13 Spec: Name
+
+   14 Stmts: Stmts Stmt
+   15      | Stmt
+
+   16 ITEControlLogic: IF LPAREN Bool RPAREN
+
+   17 Stmt: MStmt
+   18     | UStmt
+
+   19 UStmt: ITEControlLogic THEN Stmt
+   20      | ITEControlLogic THEN MStmt ELSE UStmt
+
+   21 MStmt: ITEControlLogic THEN MStmt ELSE MStmt
+   22      | Stmt1
+
+   23 Stmt1: Reference EQUALS Expr SEMICOLON
+   24      | LBRACKET Stmts RBRACKET
+   25      | LBRACKET RBRACKET
+   26      | WhileHead LBRACKET Stmts RBRACKET
+   27      | Read
+   28      | Write
+   29      | SEMICOLON
+   30      | error
+
+   31 WhileHead: WHILE LPAREN Bool RPAREN
+
+   32 Read: READ Reference SEMICOLON
+
+   33 Write: WRITE Expr SEMICOLON
+
+   34 Expr: Expr PLUS Term
+   35     | Expr MINUS Term
+   36     | Term
+
+   37 Term: Term TIMES Factor
+   38     | Term DIVIDE Factor
+   39     | Factor
+
+   40 Factor: LPAREN Expr RPAREN
+   41       | Reference
+   42       | Number
+   43       | CharConst
+
+   44 Reference: Name
+
+   45 Name: NAME
+
+   46 Number: NUMBER
+
+   47 CharConst: CHARCONST
+
+   48 Bool: NOT OrTerm
+   49     | OrTerm
+
+   50 OrTerm: OrTerm OR AndTerm
+   51       | AndTerm
+
+   52 AndTerm: AndTerm AND RelExpr
+   53        | RelExpr
+
+   54 RelExpr: RelExpr LT Expr
+   55        | RelExpr LE Expr
+   56        | RelExpr EQ Expr
+   57        | RelExpr NE Expr
+   58        | RelExpr GE Expr
+   59        | RelExpr GT Expr
+   60        | Expr
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256) 30
+BY (258)
+CHAR (259) 10
+CHARCONST (260) 47
+COLON (261)
+COMMA (262) 11
+DIVIDE (263) 38
+ELSE (264) 20 21
+ENDOFFILE (265) 1 5
+EQUALS (266) 23
+FOR (267)
+IF (268) 16
+INT (269) 9
+LBRACKET (270) 4 5 24 25 26
+LPAREN (271) 16 31 40
+LSQUARE (272)
+MINUS (273) 35
+NAME (274) 45
+ELE (275)
+NOT (276) 48
+NUMBER (277) 46
+PLUS (278) 34
+PROCEDURE (279) 4 5
+RBRACKET (280) 4 24 25 26
+READ (281) 32
+RPAREN (282) 16 31 40
+RSQUARE (283)
+SEMICOLON (284) 6 7 23 29 32 33
+THEN (285) 19 20 21
+TIMES (286) 37
+TO (287)
+WHILE (288) 31
+WRITE (289) 33
+UNKNOWN (290)
+LT (291) 54
+LE (292) 55
+EQ (293) 56
+NE (294) 57
+GE (295) 58
+GT (296) 59
+AND (297) 52
+OR (298) 50
+
+
+Nonterminals, with rules where they appear
+
+$accept (44)
+    on left: 0
+Grammar (45)
+    on left: 1, on right: 0
+ProcList (46)
+    on left: 2 3, on right: 1 2
+Proc (47)
+    on left: 4 5, on right: 2 3
+Decls (48)
+    on left: 6 7, on right: 4 5 6
+Decl (49)
+    on left: 8, on right: 6 7
+Type (50)
+    on left: 9 10, on right: 8
+SpecList (51)
+    on left: 11 12, on right: 8 11
+Spec (52)
+    on left: 13, on right: 11 12
+Stmts (53)
+    on left: 14 15, on right: 4 5 14 24 26
+ITEControlLogic (54)
+    on left: 16, on right: 19 20 21
+Stmt (55)
+    on left: 17 18, on right: 14 15 19
+UStmt (56)
+    on left: 19 20, on right: 18 20
+MStmt (57)
+    on left: 21 22, on right: 17 20 21
+Stmt1 (58)
+    on left: 23 24 25 26 27 28 29 30, on right: 22
+WhileHead (59)
+    on left: 31, on right: 26
+Read (60)
+    on left: 32, on right: 27
+Write (61)
+    on left: 33, on right: 28
+Expr (62)
+    on left: 34 35 36, on right: 23 33 34 35 40 54 55 56 57 58 59 60
+Term (63)
+    on left: 37 38 39, on right: 34 35 36 37 38
+Factor (64)
+    on left: 40 41 42 43, on right: 37 38 39
+Reference (65)
+    on left: 44, on right: 23 32 41
+Name (66)
+    on left: 45, on right: 4 5 13 44
+Number (67)
+    on left: 46, on right: 42
+CharConst (68)
+    on left: 47, on right: 43
+Bool (69)
+    on left: 48 49, on right: 16 31
+OrTerm (70)
+    on left: 50 51, on right: 48 49 50
+AndTerm (71)
+    on left: 52 53, on right: 50 51 52
+RelExpr (72)
+    on left: 54 55 56 57 58 59 60, on right: 52 53 54 55 56 57 58 59
+
+
+state 0
+
+    0 $accept: . Grammar $end
+
+    PROCEDURE  shift, and go to state 1
+
+    Grammar   go to state 2
+    ProcList  go to state 3
+    Proc      go to state 4
+
+
+state 1
+
+    4 Proc: PROCEDURE . Name LBRACKET Decls Stmts RBRACKET
+    5     | PROCEDURE . Name LBRACKET Decls Stmts ENDOFFILE
+
+    NAME  shift, and go to state 5
+
+    Name  go to state 6
+
+
+state 2
+
+    0 $accept: Grammar . $end
+
+    $end  shift, and go to state 7
+
+
+state 3
+
+    1 Grammar: ProcList . ENDOFFILE
+    2 ProcList: ProcList . Proc
+
+    ENDOFFILE  shift, and go to state 8
+    PROCEDURE  shift, and go to state 1
+
+    Proc  go to state 9
+
+
+state 4
+
+    3 ProcList: Proc .
+
+    $default  reduce using rule 3 (ProcList)
+
+
+state 5
+
+   45 Name: NAME .
+
+    $default  reduce using rule 45 (Name)
+
+
+state 6
+
+    4 Proc: PROCEDURE Name . LBRACKET Decls Stmts RBRACKET
+    5     | PROCEDURE Name . LBRACKET Decls Stmts ENDOFFILE
+
+    LBRACKET  shift, and go to state 10
+
+
+state 7
+
+    0 $accept: Grammar $end .
+
+    $default  accept
+
+
+state 8
+
+    1 Grammar: ProcList ENDOFFILE .
+
+    $default  reduce using rule 1 (Grammar)
+
+
+state 9
+
+    2 ProcList: ProcList Proc .
+
+    $default  reduce using rule 2 (ProcList)
+
+
+state 10
+
+    4 Proc: PROCEDURE Name LBRACKET . Decls Stmts RBRACKET
+    5     | PROCEDURE Name LBRACKET . Decls Stmts ENDOFFILE
+
+    CHAR  shift, and go to state 11
+    INT   shift, and go to state 12
+
+    Decls  go to state 13
+    Decl   go to state 14
+    Type   go to state 15
+
+
+state 11
+
+   10 Type: CHAR .
+
+    $default  reduce using rule 10 (Type)
+
+
+state 12
+
+    9 Type: INT .
+
+    $default  reduce using rule 9 (Type)
+
+
+state 13
+
+    4 Proc: PROCEDURE Name LBRACKET Decls . Stmts RBRACKET
+    5     | PROCEDURE Name LBRACKET Decls . Stmts ENDOFFILE
+    6 Decls: Decls . Decl SEMICOLON
+
+    error      shift, and go to state 16
+    CHAR       shift, and go to state 11
+    IF         shift, and go to state 17
+    INT        shift, and go to state 12
+    LBRACKET   shift, and go to state 18
+    NAME       shift, and go to state 5
+    READ       shift, and go to state 19
+    SEMICOLON  shift, and go to state 20
+    WHILE      shift, and go to state 21
+    WRITE      shift, and go to state 22
+
+    Decl             go to state 23
+    Type             go to state 15
+    Stmts            go to state 24
+    ITEControlLogic  go to state 25
+    Stmt             go to state 26
+    UStmt            go to state 27
+    MStmt            go to state 28
+    Stmt1            go to state 29
+    WhileHead        go to state 30
+    Read             go to state 31
+    Write            go to state 32
+    Reference        go to state 33
+    Name             go to state 34
+
+
+state 14
+
+    7 Decls: Decl . SEMICOLON
+
+    SEMICOLON  shift, and go to state 35
+
+
+state 15
+
+    8 Decl: Type . SpecList
+
+    NAME  shift, and go to state 5
+
+    SpecList  go to state 36
+    Spec      go to state 37
+    Name      go to state 38
+
+
+state 16
+
+   30 Stmt1: error .
+
+    $default  reduce using rule 30 (Stmt1)
+
+
+state 17
+
+   16 ITEControlLogic: IF . LPAREN Bool RPAREN
+
+    LPAREN  shift, and go to state 39
+
+
+state 18
+
+   24 Stmt1: LBRACKET . Stmts RBRACKET
+   25      | LBRACKET . RBRACKET
+
+    error      shift, and go to state 16
+    IF         shift, and go to state 17
+    LBRACKET   shift, and go to state 18
+    NAME       shift, and go to state 5
+    RBRACKET   shift, and go to state 40
+    READ       shift, and go to state 19
+    SEMICOLON  shift, and go to state 20
+    WHILE      shift, and go to state 21
+    WRITE      shift, and go to state 22
+
+    Stmts            go to state 41
+    ITEControlLogic  go to state 25
+    Stmt             go to state 26
+    UStmt            go to state 27
+    MStmt            go to state 28
+    Stmt1            go to state 29
+    WhileHead        go to state 30
+    Read             go to state 31
+    Write            go to state 32
+    Reference        go to state 33
+    Name             go to state 34
+
+
+state 19
+
+   32 Read: READ . Reference SEMICOLON
+
+    NAME  shift, and go to state 5
+
+    Reference  go to state 42
+    Name       go to state 34
+
+
+state 20
+
+   29 Stmt1: SEMICOLON .
+
+    $default  reduce using rule 29 (Stmt1)
+
+
+state 21
+
+   31 WhileHead: WHILE . LPAREN Bool RPAREN
+
+    LPAREN  shift, and go to state 43
+
+
+state 22
+
+   33 Write: WRITE . Expr SEMICOLON
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 47
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 23
+
+    6 Decls: Decls Decl . SEMICOLON
+
+    SEMICOLON  shift, and go to state 53
+
+
+state 24
+
+    4 Proc: PROCEDURE Name LBRACKET Decls Stmts . RBRACKET
+    5     | PROCEDURE Name LBRACKET Decls Stmts . ENDOFFILE
+   14 Stmts: Stmts . Stmt
+
+    error      shift, and go to state 16
+    ENDOFFILE  shift, and go to state 54
+    IF         shift, and go to state 17
+    LBRACKET   shift, and go to state 18
+    NAME       shift, and go to state 5
+    RBRACKET   shift, and go to state 55
+    READ       shift, and go to state 19
+    SEMICOLON  shift, and go to state 20
+    WHILE      shift, and go to state 21
+    WRITE      shift, and go to state 22
+
+    ITEControlLogic  go to state 25
+    Stmt             go to state 56
+    UStmt            go to state 27
+    MStmt            go to state 28
+    Stmt1            go to state 29
+    WhileHead        go to state 30
+    Read             go to state 31
+    Write            go to state 32
+    Reference        go to state 33
+    Name             go to state 34
+
+
+state 25
+
+   19 UStmt: ITEControlLogic . THEN Stmt
+   20      | ITEControlLogic . THEN MStmt ELSE UStmt
+   21 MStmt: ITEControlLogic . THEN MStmt ELSE MStmt
+
+    THEN  shift, and go to state 57
+
+
+state 26
+
+   15 Stmts: Stmt .
+
+    $default  reduce using rule 15 (Stmts)
+
+
+state 27
+
+   18 Stmt: UStmt .
+
+    $default  reduce using rule 18 (Stmt)
+
+
+state 28
+
+   17 Stmt: MStmt .
+
+    $default  reduce using rule 17 (Stmt)
+
+
+state 29
+
+   22 MStmt: Stmt1 .
+
+    $default  reduce using rule 22 (MStmt)
+
+
+state 30
+
+   26 Stmt1: WhileHead . LBRACKET Stmts RBRACKET
+
+    LBRACKET  shift, and go to state 58
+
+
+state 31
+
+   27 Stmt1: Read .
+
+    $default  reduce using rule 27 (Stmt1)
+
+
+state 32
+
+   28 Stmt1: Write .
+
+    $default  reduce using rule 28 (Stmt1)
+
+
+state 33
+
+   23 Stmt1: Reference . EQUALS Expr SEMICOLON
+
+    EQUALS  shift, and go to state 59
+
+
+state 34
+
+   44 Reference: Name .
+
+    $default  reduce using rule 44 (Reference)
+
+
+state 35
+
+    7 Decls: Decl SEMICOLON .
+
+    $default  reduce using rule 7 (Decls)
+
+
+state 36
+
+    8 Decl: Type SpecList .
+   11 SpecList: SpecList . COMMA Spec
+
+    COMMA  shift, and go to state 60
+
+    $default  reduce using rule 8 (Decl)
+
+
+state 37
+
+   12 SpecList: Spec .
+
+    $default  reduce using rule 12 (SpecList)
+
+
+state 38
+
+   13 Spec: Name .
+
+    $default  reduce using rule 13 (Spec)
+
+
+state 39
+
+   16 ITEControlLogic: IF LPAREN . Bool RPAREN
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NOT        shift, and go to state 61
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 62
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+    Bool       go to state 63
+    OrTerm     go to state 64
+    AndTerm    go to state 65
+    RelExpr    go to state 66
+
+
+state 40
+
+   25 Stmt1: LBRACKET RBRACKET .
+
+    $default  reduce using rule 25 (Stmt1)
+
+
+state 41
+
+   14 Stmts: Stmts . Stmt
+   24 Stmt1: LBRACKET Stmts . RBRACKET
+
+    error      shift, and go to state 16
+    IF         shift, and go to state 17
+    LBRACKET   shift, and go to state 18
+    NAME       shift, and go to state 5
+    RBRACKET   shift, and go to state 67
+    READ       shift, and go to state 19
+    SEMICOLON  shift, and go to state 20
+    WHILE      shift, and go to state 21
+    WRITE      shift, and go to state 22
+
+    ITEControlLogic  go to state 25
+    Stmt             go to state 56
+    UStmt            go to state 27
+    MStmt            go to state 28
+    Stmt1            go to state 29
+    WhileHead        go to state 30
+    Read             go to state 31
+    Write            go to state 32
+    Reference        go to state 33
+    Name             go to state 34
+
+
+state 42
+
+   32 Read: READ Reference . SEMICOLON
+
+    SEMICOLON  shift, and go to state 68
+
+
+state 43
+
+   31 WhileHead: WHILE LPAREN . Bool RPAREN
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NOT        shift, and go to state 61
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 62
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+    Bool       go to state 69
+    OrTerm     go to state 64
+    AndTerm    go to state 65
+    RelExpr    go to state 66
+
+
+state 44
+
+   47 CharConst: CHARCONST .
+
+    $default  reduce using rule 47 (CharConst)
+
+
+state 45
+
+   40 Factor: LPAREN . Expr RPAREN
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 70
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 46
+
+   46 Number: NUMBER .
+
+    $default  reduce using rule 46 (Number)
+
+
+state 47
+
+   33 Write: WRITE Expr . SEMICOLON
+   34 Expr: Expr . PLUS Term
+   35     | Expr . MINUS Term
+
+    MINUS      shift, and go to state 71
+    PLUS       shift, and go to state 72
+    SEMICOLON  shift, and go to state 73
+
+
+state 48
+
+   36 Expr: Term .
+   37 Term: Term . TIMES Factor
+   38     | Term . DIVIDE Factor
+
+    DIVIDE  shift, and go to state 74
+    TIMES   shift, and go to state 75
+
+    $default  reduce using rule 36 (Expr)
+
+
+state 49
+
+   39 Term: Factor .
+
+    $default  reduce using rule 39 (Term)
+
+
+state 50
+
+   41 Factor: Reference .
+
+    $default  reduce using rule 41 (Factor)
+
+
+state 51
+
+   42 Factor: Number .
+
+    $default  reduce using rule 42 (Factor)
+
+
+state 52
+
+   43 Factor: CharConst .
+
+    $default  reduce using rule 43 (Factor)
+
+
+state 53
+
+    6 Decls: Decls Decl SEMICOLON .
+
+    $default  reduce using rule 6 (Decls)
+
+
+state 54
+
+    5 Proc: PROCEDURE Name LBRACKET Decls Stmts ENDOFFILE .
+
+    $default  reduce using rule 5 (Proc)
+
+
+state 55
+
+    4 Proc: PROCEDURE Name LBRACKET Decls Stmts RBRACKET .
+
+    $default  reduce using rule 4 (Proc)
+
+
+state 56
+
+   14 Stmts: Stmts Stmt .
+
+    $default  reduce using rule 14 (Stmts)
+
+
+state 57
+
+   19 UStmt: ITEControlLogic THEN . Stmt
+   20      | ITEControlLogic THEN . MStmt ELSE UStmt
+   21 MStmt: ITEControlLogic THEN . MStmt ELSE MStmt
+
+    error      shift, and go to state 16
+    IF         shift, and go to state 17
+    LBRACKET   shift, and go to state 18
+    NAME       shift, and go to state 5
+    READ       shift, and go to state 19
+    SEMICOLON  shift, and go to state 20
+    WHILE      shift, and go to state 21
+    WRITE      shift, and go to state 22
+
+    ITEControlLogic  go to state 25
+    Stmt             go to state 76
+    UStmt            go to state 27
+    MStmt            go to state 77
+    Stmt1            go to state 29
+    WhileHead        go to state 30
+    Read             go to state 31
+    Write            go to state 32
+    Reference        go to state 33
+    Name             go to state 34
+
+
+state 58
+
+   26 Stmt1: WhileHead LBRACKET . Stmts RBRACKET
+
+    error      shift, and go to state 16
+    IF         shift, and go to state 17
+    LBRACKET   shift, and go to state 18
+    NAME       shift, and go to state 5
+    READ       shift, and go to state 19
+    SEMICOLON  shift, and go to state 20
+    WHILE      shift, and go to state 21
+    WRITE      shift, and go to state 22
+
+    Stmts            go to state 78
+    ITEControlLogic  go to state 25
+    Stmt             go to state 26
+    UStmt            go to state 27
+    MStmt            go to state 28
+    Stmt1            go to state 29
+    WhileHead        go to state 30
+    Read             go to state 31
+    Write            go to state 32
+    Reference        go to state 33
+    Name             go to state 34
+
+
+state 59
+
+   23 Stmt1: Reference EQUALS . Expr SEMICOLON
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 79
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 60
+
+   11 SpecList: SpecList COMMA . Spec
+
+    NAME  shift, and go to state 5
+
+    Spec  go to state 80
+    Name  go to state 38
+
+
+state 61
+
+   48 Bool: NOT . OrTerm
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 62
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+    OrTerm     go to state 81
+    AndTerm    go to state 65
+    RelExpr    go to state 66
+
+
+state 62
+
+   34 Expr: Expr . PLUS Term
+   35     | Expr . MINUS Term
+   60 RelExpr: Expr .
+
+    MINUS  shift, and go to state 71
+    PLUS   shift, and go to state 72
+
+    $default  reduce using rule 60 (RelExpr)
+
+
+state 63
+
+   16 ITEControlLogic: IF LPAREN Bool . RPAREN
+
+    RPAREN  shift, and go to state 82
+
+
+state 64
+
+   49 Bool: OrTerm .
+   50 OrTerm: OrTerm . OR AndTerm
+
+    OR  shift, and go to state 83
+
+    $default  reduce using rule 49 (Bool)
+
+
+state 65
+
+   51 OrTerm: AndTerm .
+   52 AndTerm: AndTerm . AND RelExpr
+
+    AND  shift, and go to state 84
+
+    $default  reduce using rule 51 (OrTerm)
+
+
+state 66
+
+   53 AndTerm: RelExpr .
+   54 RelExpr: RelExpr . LT Expr
+   55        | RelExpr . LE Expr
+   56        | RelExpr . EQ Expr
+   57        | RelExpr . NE Expr
+   58        | RelExpr . GE Expr
+   59        | RelExpr . GT Expr
+
+    LT  shift, and go to state 85
+    LE  shift, and go to state 86
+    EQ  shift, and go to state 87
+    NE  shift, and go to state 88
+    GE  shift, and go to state 89
+    GT  shift, and go to state 90
+
+    $default  reduce using rule 53 (AndTerm)
+
+
+state 67
+
+   24 Stmt1: LBRACKET Stmts RBRACKET .
+
+    $default  reduce using rule 24 (Stmt1)
+
+
+state 68
+
+   32 Read: READ Reference SEMICOLON .
+
+    $default  reduce using rule 32 (Read)
+
+
+state 69
+
+   31 WhileHead: WHILE LPAREN Bool . RPAREN
+
+    RPAREN  shift, and go to state 91
+
+
+state 70
+
+   34 Expr: Expr . PLUS Term
+   35     | Expr . MINUS Term
+   40 Factor: LPAREN Expr . RPAREN
+
+    MINUS   shift, and go to state 71
+    PLUS    shift, and go to state 72
+    RPAREN  shift, and go to state 92
+
+
+state 71
+
+   35 Expr: Expr MINUS . Term
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Term       go to state 93
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 72
+
+   34 Expr: Expr PLUS . Term
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Term       go to state 94
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 73
+
+   33 Write: WRITE Expr SEMICOLON .
+
+    $default  reduce using rule 33 (Write)
+
+
+state 74
+
+   38 Term: Term DIVIDE . Factor
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Factor     go to state 95
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 75
+
+   37 Term: Term TIMES . Factor
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Factor     go to state 96
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 76
+
+   19 UStmt: ITEControlLogic THEN Stmt .
+
+    $default  reduce using rule 19 (UStmt)
+
+
+state 77
+
+   17 Stmt: MStmt .
+   20 UStmt: ITEControlLogic THEN MStmt . ELSE UStmt
+   21 MStmt: ITEControlLogic THEN MStmt . ELSE MStmt
+
+    ELSE  shift, and go to state 97
+
+    $default  reduce using rule 17 (Stmt)
+
+
+state 78
+
+   14 Stmts: Stmts . Stmt
+   26 Stmt1: WhileHead LBRACKET Stmts . RBRACKET
+
+    error      shift, and go to state 16
+    IF         shift, and go to state 17
+    LBRACKET   shift, and go to state 18
+    NAME       shift, and go to state 5
+    RBRACKET   shift, and go to state 98
+    READ       shift, and go to state 19
+    SEMICOLON  shift, and go to state 20
+    WHILE      shift, and go to state 21
+    WRITE      shift, and go to state 22
+
+    ITEControlLogic  go to state 25
+    Stmt             go to state 56
+    UStmt            go to state 27
+    MStmt            go to state 28
+    Stmt1            go to state 29
+    WhileHead        go to state 30
+    Read             go to state 31
+    Write            go to state 32
+    Reference        go to state 33
+    Name             go to state 34
+
+
+state 79
+
+   23 Stmt1: Reference EQUALS Expr . SEMICOLON
+   34 Expr: Expr . PLUS Term
+   35     | Expr . MINUS Term
+
+    MINUS      shift, and go to state 71
+    PLUS       shift, and go to state 72
+    SEMICOLON  shift, and go to state 99
+
+
+state 80
+
+   11 SpecList: SpecList COMMA Spec .
+
+    $default  reduce using rule 11 (SpecList)
+
+
+state 81
+
+   48 Bool: NOT OrTerm .
+   50 OrTerm: OrTerm . OR AndTerm
+
+    OR  shift, and go to state 83
+
+    $default  reduce using rule 48 (Bool)
+
+
+state 82
+
+   16 ITEControlLogic: IF LPAREN Bool RPAREN .
+
+    $default  reduce using rule 16 (ITEControlLogic)
+
+
+state 83
+
+   50 OrTerm: OrTerm OR . AndTerm
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 62
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+    AndTerm    go to state 100
+    RelExpr    go to state 66
+
+
+state 84
+
+   52 AndTerm: AndTerm AND . RelExpr
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 62
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+    RelExpr    go to state 101
+
+
+state 85
+
+   54 RelExpr: RelExpr LT . Expr
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 102
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 86
+
+   55 RelExpr: RelExpr LE . Expr
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 103
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 87
+
+   56 RelExpr: RelExpr EQ . Expr
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 104
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 88
+
+   57 RelExpr: RelExpr NE . Expr
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 105
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 89
+
+   58 RelExpr: RelExpr GE . Expr
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 106
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 90
+
+   59 RelExpr: RelExpr GT . Expr
+
+    CHARCONST  shift, and go to state 44
+    LPAREN     shift, and go to state 45
+    NAME       shift, and go to state 5
+    NUMBER     shift, and go to state 46
+
+    Expr       go to state 107
+    Term       go to state 48
+    Factor     go to state 49
+    Reference  go to state 50
+    Name       go to state 34
+    Number     go to state 51
+    CharConst  go to state 52
+
+
+state 91
+
+   31 WhileHead: WHILE LPAREN Bool RPAREN .
+
+    $default  reduce using rule 31 (WhileHead)
+
+
+state 92
+
+   40 Factor: LPAREN Expr RPAREN .
+
+    $default  reduce using rule 40 (Factor)
+
+
+state 93
+
+   35 Expr: Expr MINUS Term .
+   37 Term: Term . TIMES Factor
+   38     | Term . DIVIDE Factor
+
+    DIVIDE  shift, and go to state 74
+    TIMES   shift, and go to state 75
+
+    $default  reduce using rule 35 (Expr)
+
+
+state 94
+
+   34 Expr: Expr PLUS Term .
+   37 Term: Term . TIMES Factor
+   38     | Term . DIVIDE Factor
+
+    DIVIDE  shift, and go to state 74
+    TIMES   shift, and go to state 75
+
+    $default  reduce using rule 34 (Expr)
+
+
+state 95
+
+   38 Term: Term DIVIDE Factor .
+
+    $default  reduce using rule 38 (Term)
+
+
+state 96
+
+   37 Term: Term TIMES Factor .
+
+    $default  reduce using rule 37 (Term)
+
+
+state 97
+
+   20 UStmt: ITEControlLogic THEN MStmt ELSE . UStmt
+   21 MStmt: ITEControlLogic THEN MStmt ELSE . MStmt
+
+    error      shift, and go to state 16
+    IF         shift, and go to state 17
+    LBRACKET   shift, and go to state 18
+    NAME       shift, and go to state 5
+    READ       shift, and go to state 19
+    SEMICOLON  shift, and go to state 20
+    WHILE      shift, and go to state 21
+    WRITE      shift, and go to state 22
+
+    ITEControlLogic  go to state 25
+    UStmt            go to state 108
+    MStmt            go to state 109
+    Stmt1            go to state 29
+    WhileHead        go to state 30
+    Read             go to state 31
+    Write            go to state 32
+    Reference        go to state 33
+    Name             go to state 34
+
+
+state 98
+
+   26 Stmt1: WhileHead LBRACKET Stmts RBRACKET .
+
+    $default  reduce using rule 26 (Stmt1)
+
+
+state 99
+
+   23 Stmt1: Reference EQUALS Expr SEMICOLON .
+
+    $default  reduce using rule 23 (Stmt1)
+
+
+state 100
+
+   50 OrTerm: OrTerm OR AndTerm .
+   52 AndTerm: AndTerm . AND RelExpr
+
+    AND  shift, and go to state 84
+
+    $default  reduce using rule 50 (OrTerm)
+
+
+state 101
+
+   52 AndTerm: AndTerm AND RelExpr .
+   54 RelExpr: RelExpr . LT Expr
+   55        | RelExpr . LE Expr
+   56        | RelExpr . EQ Expr
+   57        | RelExpr . NE Expr
+   58        | RelExpr . GE Expr
+   59        | RelExpr . GT Expr
+
+    LT  shift, and go to state 85
+    LE  shift, and go to state 86
+    EQ  shift, and go to state 87
+    NE  shift, and go to state 88
+    GE  shift, and go to state 89
+    GT  shift, and go to state 90
+
+    $default  reduce using rule 52 (AndTerm)
+
+
+state 102
+
+   34 Expr: Expr . PLUS Term
+   35     | Expr . MINUS Term
+   54 RelExpr: RelExpr LT Expr .
+
+    MINUS  shift, and go to state 71
+    PLUS   shift, and go to state 72
+
+    $default  reduce using rule 54 (RelExpr)
+
+
+state 103
+
+   34 Expr: Expr . PLUS Term
+   35     | Expr . MINUS Term
+   55 RelExpr: RelExpr LE Expr .
+
+    MINUS  shift, and go to state 71
+    PLUS   shift, and go to state 72
+
+    $default  reduce using rule 55 (RelExpr)
+
+
+state 104
+
+   34 Expr: Expr . PLUS Term
+   35     | Expr . MINUS Term
+   56 RelExpr: RelExpr EQ Expr .
+
+    MINUS  shift, and go to state 71
+    PLUS   shift, and go to state 72
+
+    $default  reduce using rule 56 (RelExpr)
+
+
+state 105
+
+   34 Expr: Expr . PLUS Term
+   35     | Expr . MINUS Term
+   57 RelExpr: RelExpr NE Expr .
+
+    MINUS  shift, and go to state 71
+    PLUS   shift, and go to state 72
+
+    $default  reduce using rule 57 (RelExpr)
+
+
+state 106
+
+   34 Expr: Expr . PLUS Term
+   35     | Expr . MINUS Term
+   58 RelExpr: RelExpr GE Expr .
+
+    MINUS  shift, and go to state 71
+    PLUS   shift, and go to state 72
+
+    $default  reduce using rule 58 (RelExpr)
+
+
+state 107
+
+   34 Expr: Expr . PLUS Term
+   35     | Expr . MINUS Term
+   59 RelExpr: RelExpr GT Expr .
+
+    MINUS  shift, and go to state 71
+    PLUS   shift, and go to state 72
+
+    $default  reduce using rule 59 (RelExpr)
+
+
+state 108
+
+   20 UStmt: ITEControlLogic THEN MStmt ELSE UStmt .
+
+    $default  reduce using rule 20 (UStmt)
+
+
+state 109
+
+   21 MStmt: ITEControlLogic THEN MStmt ELSE MStmt .
+
+    $default  reduce using rule 21 (MStmt)

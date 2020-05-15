@@ -1,0 +1,10 @@
+procedure test {
+  char c, d;
+
+  c = 'c';
+  d = 'd';
+  a = '\0'
+  write c;
+  write d;
+  write a;
+}
