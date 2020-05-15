@@ -1,4 +1,4 @@
-# Rice University-Compiler Construction
+# Compiler Construction
 
 ## Lab Goals
 - lab1: Using flex and bison for DEMO language
